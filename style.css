@@ -1,0 +1,416 @@
+:root {
+    /* Light mode colors */
+    --bg-color: #f4f4f9;
+    --container-bg: #fff;
+    --text-color: #333;
+    --border-color: #ccc;
+    --input-bg: #fff;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+    --clear-button-bg: #dc3545;
+    --clear-button-hover-bg: #c82333;
+    --history-bg: #f9f9f9;
+    --history-item-bg: #fff;
+    --history-border: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --toast-bg: #333;
+    --toast-text: #fff;
+    --toggle-icon-color: #666;
+    --time-remaining-color: #ff6b6b;
+}
+
+[data-theme="dark"] {
+    /* Dark mode colors */
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #e0e0e0;
+    --border-color: #555;
+    --input-bg: #3a3a3a;
+    --button-bg: #0d6efd;
+    --button-hover-bg: #0b5ed7;
+    --clear-button-bg: #dc3545;
+    --clear-button-hover-bg: #bb2d3b;
+    --history-bg: #3a3a3a;
+    --history-item-bg: #4a4a4a;
+    --history-border: #555;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --toast-bg: #4a4a4a;
+    --toast-text: #e0e0e0;
+    --toggle-icon-color: #bbb;
+    --time-remaining-color: #ff7b7b;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-color);
+    text-shadow: 0 2px 4px var(--shadow);
+    transition: color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .main-header h1 {
+        font-size: 2rem;
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 94%;
+    max-width: 1400px;
+}
+
+.spacer {
+    width: 5%;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#theme-toggle-btn {
+    background: var(--container-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--shadow);
+}
+
+#theme-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+.clear-all-btn {
+    background: var(--clear-button-bg);
+    border: 2px solid var(--clear-button-bg);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--shadow);
+    color: white;
+}
+
+.clear-all-btn:hover {
+    transform: scale(1.1);
+    background: var(--clear-button-hover-bg);
+    border-color: var(--clear-button-hover-bg);
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+.encrypt-section {
+    margin-left: 3%;
+    width: 45%;
+    background: var(--container-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.decrypt-section {
+    margin-right: 3%;
+    width: 45%;
+    background: var(--container-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    resize: vertical;
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+textarea:focus, input:focus {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    outline: none;
+    border-color: var(--button-bg);
+}
+
+textarea::placeholder, input::placeholder {
+    color: var(--toggle-icon-color);
+    opacity: 0.7;
+}
+
+/* Override browser autofill/autocomplete styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+}
+
+/* Force background color for all states */
+input[type="password"],
+input[type="text"],
+textarea {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+}
+
+/* Additional browser overrides */
+input:-internal-autofill-selected {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+}
+
+textarea {
+    height: 120px;
+}
+
+input {
+    height: 40px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    padding-right: 50px;
+}
+
+.textarea-group {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.textarea-group textarea {
+    padding-right: 80px;
+}
+
+.toggle-btn, .copy-input-btn, .paste-input-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+    color: var(--toggle-icon-color);
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.copy-input-btn {
+    top: 10px;
+    right: 40px;
+}
+
+.paste-input-btn {
+    top: 10px;
+    right: 10px;
+}
+
+.toggle-btn:hover, .copy-input-btn:hover, .paste-input-btn:hover {
+    background-color: transparent;
+    color: #007bff;
+}
+
+button {
+    padding: 10px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.button-group button {
+    flex: 1;
+    min-width: 120px;
+}
+
+.clear-btn {
+    background-color: var(--clear-button-bg);
+}
+
+.clear-btn:hover {
+    background-color: var(--clear-button-hover-bg);
+}
+
+
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--toast-bg);
+    color: var(--toast-text);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+    z-index: 1000;
+}
+
+#toast.show {
+    opacity: 1;
+}
+
+/* History Section Styles */
+.history-section {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--history-border);
+    transition: border-color 0.3s ease;
+}
+
+.history-section h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: var(--text-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.history-list {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--history-border);
+    border-radius: 4px;
+    padding: 8px;
+    background-color: var(--history-bg);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.history-item {
+    background: var(--history-item-bg);
+    border: 1px solid var(--history-border);
+    border-radius: 4px;
+    padding: 6px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.3s ease;
+}
+
+.history-item:hover {
+    background-color: #f0f8ff;
+}
+
+.history-item:last-child {
+    margin-bottom: 0;
+}
+
+.history-timestamp {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.time-remaining {
+    color: var(--time-remaining-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.history-input {
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 2px;
+    word-break: break-all;
+}
+
+.history-output {
+    color: #007bff;
+    font-family: monospace;
+    word-break: break-all;
+}
+
+.history-copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #666;
+    padding: 2px;
+}
+
+.history-copy-btn:hover {
+    color: #007bff;
+}
+
+.no-history {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin: 10px 0;
+    font-size: 12px;
+}
